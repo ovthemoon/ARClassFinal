@@ -7,13 +7,15 @@ public class Enemy : MonoBehaviour
     public float moveSpeed = 3f;
     public float impulsePower = 10f;
     public int enemyExp = 10;
+    public int moneyDrop = 3;
+    
     Rigidbody rb;
     GameObject target;
     Vector3 direction;
     [SerializeField]
     private float enemyHp = 3;
-    
     private int attackAmount = 2;
+    private bool isDead;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,26 +31,29 @@ public class Enemy : MonoBehaviour
             direction = (target.transform.position - transform.position).normalized;
             rb.MovePosition(transform.position + direction * moveSpeed * Time.deltaTime);
         }
-    }
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.gameObject.CompareTag("Attack"))
+        if (isDead)
         {
-            enemyHp -= collider.GetComponent<Skills>().attackAmount;
-            //rb.AddForce(-direction*impulsePower, ForceMode.Impulse);
-            
-        }
-        else if (collider.gameObject.CompareTag("Player"))
-        {
-            GameManager.Instance.decreaseHp(attackAmount);
-
-        }
-        if (enemyHp <= 0)
-        {
-            GameManager.Instance.AddExp(enemyExp);
+            DataManager.Instance.UpdateExp(enemyExp);
+            DataManager.Instance.UpdateMoney(moneyDrop);
             GameManager.Instance.EnemyDefeated();
             Destroy(this.gameObject);
         }
+    }
+    public void decreaseEnemyHp()
+    {
+        enemyHp -= attackAmount;
+        if (enemyHp <= 0)
+        {
+            isDead = true;
+        }
+    }
+    private void OnTriggerEnter(Collider collider)
+    {
         
+        if (collider.gameObject.CompareTag("Player"))
+        {
+            collider.gameObject.GetComponent<Player>().decreaseHp(attackAmount);
+
+        }
     }
 }

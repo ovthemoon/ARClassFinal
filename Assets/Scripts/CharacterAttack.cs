@@ -13,8 +13,13 @@ public class CharacterAttack : MonoBehaviour
     private void Update()
     {
         pos = Camera.main.transform.position;
-        
+
+        // 카메라의 회전을 고려한 offset 계산
+        Vector3 forward = Camera.main.transform.forward;
+        Vector3 adjustedOffset = forward * offset.z + Camera.main.transform.right * offset.x + Camera.main.transform.up * offset.y;
+        offset = adjustedOffset;
     }
+
     public void FireEffect()
     {
         if (!isCooltime)

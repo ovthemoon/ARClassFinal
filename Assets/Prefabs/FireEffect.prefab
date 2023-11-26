@@ -4960,8 +4960,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.42, y: 1.4200003, z: 1.1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.7, y: 0.7, z: 0.7}
+  m_Center: {x: 0, y: 0.21, z: 0}
 --- !u!54 &4900849182852030218
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5002,6 +5002,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackAmount: 2
+  aliveTime: 5
 --- !u!1 &3144441156967119454
 GameObject:
   m_ObjectHideFlags: 0

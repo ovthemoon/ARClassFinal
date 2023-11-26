@@ -2,67 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public static GameManager Instance;
-
-    public int playerExp = 0;
     [HideInInspector]
-    public float maxHp=5;
-    [HideInInspector]
-    public int level = 1;
     public bool isCleared = false;
+    public SpawnMode spawnMode;
 
-    [SerializeField]
-    private int[] expMax;
-    private float curHp;
-    private bool isDead=false;
     private int currentEnemyCount = 0;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        if(Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-        curHp = maxHp;
-    }
+    private Player player;
 
+    private void Start()
+    {
+        player=GameObject.FindWithTag("Player").GetComponent<Player>();
+    }
     // Update is called once per frame
     void Update()
     {
-        
-    }
-    public void AddExp(int expEarn)
-    {
-        //경험치 획득
-        playerExp+=expEarn;
-        if (playerExp<=Instance.expMax[level-1])
+        if (isCleared || player.isDead)
         {
-            playerExp = playerExp % Instance.expMax[level - 1];
-            level++;
+            InteractionController.EnableMode("End");
         }
     }
-    public void decreaseHp(int attackAmount)
-    {
-        //HP 감소
-        curHp -= attackAmount;
-        if(curHp <= 0)
-        {
-            isDead = true;
-        }
-    }
-    
-
     public void EnemyDefeated()
     {
         currentEnemyCount++;
-        if (currentEnemyCount >=SpawnManager.instance.enemyCount)
+        if (currentEnemyCount >=spawnMode.enemyCount)
         {
             isCleared = true;
             // 게임 클리어 처리
