@@ -1175,52 +1175,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextMode: Scan
---- !u!1 &1197668920
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1197668922}
-  - component: {fileID: 1197668921}
-  m_Layer: 0
-  m_Name: UIManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1197668921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1197668920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2301888b44f45ff4f8ffd864cc94b80e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  level: {fileID: 8206333605519468418}
-  exp: {fileID: 2652661264965748597}
---- !u!4 &1197668922
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1197668920}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 19.09}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1240661495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1984,18 +1938,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
---- !u!114 &2083492490 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5731261387497418012, guid: 03d20784db20045468c59b82eb473569,
-    type: 3}
-  m_PrefabInstance: {fileID: 1130672582}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2083492481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9ff601588e962943ac66490db5e9e05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2103389548
 GameObject:
   m_ObjectHideFlags: 0
@@ -2565,9 +2507,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2083492490}
-        m_TargetAssemblyTypeName: CharacterAttack, Assembly-CSharp
-        m_MethodName: FireEffect
+      - m_Target: {fileID: 8826891793908919918}
+        m_TargetAssemblyTypeName: Fireball, Assembly-CSharp
+        m_MethodName: ActivateSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3265,6 +3207,7 @@ GameObject:
   - component: {fileID: 6812398243742493958}
   - component: {fileID: 968974291402717958}
   - component: {fileID: 2240889512272145635}
+  - component: {fileID: 8826891793908919918}
   m_Layer: 5
   m_Name: Fire
   m_TagString: Untagged
@@ -3790,6 +3733,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &8826891793908919918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4950934219545322415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9f8f8a2d5c5ac6469cbcae6a6fa6dc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skill: {fileID: 11400000, guid: 2beb6e08b1cb60044a3c1f724d591e4d, type: 2}
 --- !u!224 &8856502926373593298
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3947,4 +3903,3 @@ SceneRoots:
   - {fileID: 2500190894581484801}
   - {fileID: 1763481839}
   - {fileID: 495888782}
-  - {fileID: 1197668922}
