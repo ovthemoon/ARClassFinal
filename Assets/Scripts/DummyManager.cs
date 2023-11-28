@@ -30,12 +30,13 @@ public struct DungeonInfo
         // Start is called before the first frame update
         void Start()
         {
+        Debug.Log("Succesfullt screated");
             dungeon[0] = new DungeonInfo((37.791231f,127.123242f), 1, 0, 10,false);
             //0은 보스
             for (int i = 1; i < dungeon.Length; i++)
             {
                 //약간의 오프셋 설정을 위해 0.0001을 곱해줌
-                dungeon[i] = new DungeonInfo((37.791231f+(float)0.0001*i, 127.123242f+ (float)0.0001 * i), 1, i, 10,false);
+                dungeon[i] = new DungeonInfo((37.791231f+(float)0.0001*i, 127.123242f+ (float)0.0001 * i), 1, i, 10+5*i-1,false);
             }
         }
 
@@ -44,18 +45,23 @@ public struct DungeonInfo
         {
             for (int i = 0; i < dungeon.Length; i++)
             {
-                double currentDistanceToDungeon = CalculateDistance(GPS_Manager.Instance.latitude, GPS_Manager.Instance.longitude,
-               dungeon[i].gps.latitude, dungeon[i].gps.longitude);
-                if (currentDistanceToDungeon < distance)
+            //GPS를 받아오지 못하는경우(테스트용)
+            if (GPS_Manager.Instance!=null)
                 {
                     dungeon[i].isEnableEntrance = true;
                 }
-                //GPS를 받아오지 못하는경우(테스트용)
-                if (!GPS_Manager.Instance.receiveGPS)
+                else
                 {
-                    dungeon[i].isEnableEntrance = true;
+                    double currentDistanceToDungeon = CalculateDistance(GPS_Manager.Instance.latitude, GPS_Manager.Instance.longitude,
+                   dungeon[i].gps.latitude, dungeon[i].gps.longitude);
+                    if (currentDistanceToDungeon < distance)
+                    {
+                        dungeon[i].isEnableEntrance = true;
+                    }
+                    
                 }
-            }
+
+        }
             
         }
         public double CalculateDistance(double lat1, double lon1, double lat2, double lon2)

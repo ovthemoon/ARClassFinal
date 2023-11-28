@@ -6,13 +6,13 @@ public class GameManager : Singleton<GameManager>
 {
     [HideInInspector]
     public bool isCleared = false;
-    public SpawnMode spawnMode;
     
     public int currentEnemyCount { get; private set; }
     private Player player;
     public DungeonInfo dungeonInfo;
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         currentEnemyCount = 0;
         player =GameObject.FindWithTag("Player").GetComponent<Player>();
     }
@@ -27,7 +27,7 @@ public class GameManager : Singleton<GameManager>
     public void EnemyDefeated()
     {
         currentEnemyCount++;
-        if (currentEnemyCount >=spawnMode.enemyTotalCount)
+        if (currentEnemyCount >=dungeonInfo.monsterCount)
         {
             isCleared = true;
             // 게임 클리어 처리

@@ -14,6 +14,7 @@ using System;
         public GameObject dungeon_menu;
         public GameObject exit_menu;
         public GameObject obj;
+        public SpawnMode spawnMode;
 
         public TMP_Text result1;
         public TMP_Text result;
@@ -76,17 +77,23 @@ using System;
         }
         private void SetPlayerInfo()
         {
-            
-            playerLevel.text= "LV: "+DataManager.Instance.PlayerLevel.ToString();
+        if (DataManager.Instance != null) {
+            playerLevel.text = "LV: " + DataManager.Instance.PlayerLevel.ToString();
             expBar.minValue = 0;
             expBar.maxValue = DataManager.Instance.GetExpMax();
-            expBar.value= DataManager.Instance.PlayerExp;
-            expPercentage.text = ((float)expBar.value / expBar.maxValue*100).ToString()+" %";
+            expBar.value = DataManager.Instance.PlayerExp;
+            expPercentage.text = ((float)expBar.value / expBar.maxValue * 100).ToString() + " %";
+        }
+        else
+        {
+            Debug.Log("Datamanager가 안받아져염");
+        }
+            
         }
         private void SetEnemyCount()
         {
-            totalEnemyCount.text = GameManager.Instance.dungeonInfo.monsterCount.ToString();
-            currentKilledEnemyCount.text = GameManager.Instance.currentEnemyCount.ToString();
+            totalEnemyCount.text = spawnMode.enemyTotalCount.ToString();
+            currentKilledEnemyCount.text = spawnMode.currentEnemyCount.ToString();
         }
 
         public void Entrance_button(int dungeonIndex)
@@ -101,7 +108,9 @@ using System;
                 obj.SetActive(true);
                 dungeon_menu.SetActive(false);
                 GameManager.Instance.dungeonInfo= dungeonInfo;
-                SceneManager.LoadScene("InDungeon");
+            Debug.Log("Dungeon Info Set: " + GameManager.Instance.dungeonInfo.monsterCount.ToString());
+
+            SceneManager.LoadScene("InDungeon");
             }
             else
             {
@@ -115,7 +124,7 @@ using System;
 
         public void Exit_button()
         {
-            exit_menu.SetActive(true);
+            exit_menu.SetActive(!exit_menu.activeSelf);
         }
 
         public void Main_Scene()
