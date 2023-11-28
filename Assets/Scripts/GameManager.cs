@@ -7,10 +7,10 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector]
     public bool isCleared = false;
     public SpawnMode spawnMode;
-
+    
     public int currentEnemyCount { get; private set; }
     private Player player;
-
+    public DungeonInfo dungeonInfo;
     private void Start()
     {
         currentEnemyCount = 0;
@@ -27,7 +27,7 @@ public class GameManager : Singleton<GameManager>
     public void EnemyDefeated()
     {
         currentEnemyCount++;
-        if (currentEnemyCount >=spawnMode.enemyCount)
+        if (currentEnemyCount >=spawnMode.enemyTotalCount)
         {
             isCleared = true;
             // 게임 클리어 처리

@@ -6,13 +6,14 @@ using UnityEngine.XR.ARFoundation;
 public class SpawnMode : MonoBehaviour
 {
     public GameObject enemyPrefab;
-    public int enemyCount = 5;
+   
 
     public float spawnCooltime = 3f;
     public float spawnRadius = 10f;
 
     private ARPlane spawnPlane;
     private GameObject player;
+    public int enemyTotalCount { get; private set; }
     public int curEnemyCount { get; private set; }
     private void OnEnable()
     {
@@ -24,6 +25,7 @@ public class SpawnMode : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         spawnPlane = ScanMode.selectedPlane;
         StartCoroutine(StartSpawning());
+        enemyTotalCount = GameManager.Instance.dungeonInfo.monsterCount;
     }
 
     // Update is called once per frame
@@ -33,7 +35,7 @@ public class SpawnMode : MonoBehaviour
     }
     IEnumerator StartSpawning()
     {
-        for (int i = 0; i < enemyCount; i++)
+        for (int i = 0; i < enemyTotalCount; i++)
         {
             SpawnEnemyNearPlayer();
             yield return new WaitForSeconds(spawnCooltime);
