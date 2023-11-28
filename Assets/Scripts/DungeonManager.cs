@@ -4,15 +4,15 @@ using UnityEngine;
 using TMPro;
 namespace Game
 {
-    public class Dungeon_Manager : MonoBehaviour
+    public class DungeonManager : Singleton<DungeonManager>
     {
 
         int level;
         public TMP_Text current_dungeon;
         public TMP_Text total_monster;
-        public Dummy_Manager dummyManager;
+        public DummyManager dummyManager;
         public UIManager uiManager;
-        DungeonInfo dungeonInfo;
+        public DungeonInfo dungeonInfo { get; private set; }
         // Start is called before the first frame update
         void Start()
         {

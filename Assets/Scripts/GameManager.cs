@@ -8,12 +8,13 @@ public class GameManager : Singleton<GameManager>
     public bool isCleared = false;
     public SpawnMode spawnMode;
 
-    private int currentEnemyCount = 0;
+    public int currentEnemyCount { get; private set; }
     private Player player;
 
     private void Start()
     {
-        player=GameObject.FindWithTag("Player").GetComponent<Player>();
+        currentEnemyCount = 0;
+        player =GameObject.FindWithTag("Player").GetComponent<Player>();
     }
     // Update is called once per frame
     void Update()

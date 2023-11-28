@@ -3,19 +3,20 @@ using System.Collections;
 
 public class ThrowingSkillLogic : MonoBehaviour, ISkillLogic
 {
-    [HideInInspector]
     public GameObject throwSkillPrefab;
+    public SkillScript skillData;
     public float speed = 10f;
     public Vector3 offset = new Vector3(0, 0, 3);
     public float aliveTime = 5f;
     private bool isDestroyed = false;
     private Vector3 pos;
     private bool isCooltime = false;
-    public void Activate(GameObject target)
+    
+    public void Activate()
     {
         if(!isCooltime)
         {
-            StartCoroutine(Cooltime(throwSkillPrefab.GetComponent<SkillScript>().cooldown));
+            StartCoroutine(Cooltime(skillData.cooldown));
             pos = Camera.main.transform.position;
 
             // 카메라의 회전을 고려한 offset 계산

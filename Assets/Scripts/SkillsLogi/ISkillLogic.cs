@@ -1,3 +1,6 @@
 using UnityEngine;
 
-public interface ISkillLogic { void Activate(GameObject target); }
+public interface ISkillLogic {
+    void Activate() { }
+    void Activate(GameObject target) { }
+}

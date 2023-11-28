@@ -74,4 +74,8 @@ public class DataManager : Singleton<DataManager>
         Money += money;
         SaveData();
     }
+    public int GetExpMax()
+    {
+        return expMax[PlayerLevel - 1];
+    }
 }
