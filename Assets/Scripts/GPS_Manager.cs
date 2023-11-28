@@ -4,28 +4,19 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Android;
 
-public class GPS_Manager : MonoBehaviour
+public class GPS_Manager : Singleton<GPS_Manager>
 {
-    public static GPS_Manager instance;
     public TMP_Text latitude_text;
     public TMP_Text longtitude_text;
 
     public float latitude = 0;
-    public float longtitude = 0;
+    public float longitude = 0;
     public float maxWaitTime = 10.0f;
 
     public bool receiveGPS = false;
     public float resendTime = 1.0f;
 
     float waitTime = 0;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-    }
     // Start is called before the first frame update
     void Start()
     {
@@ -86,11 +77,11 @@ public class GPS_Manager : MonoBehaviour
 
             LocationInfo li = Input.location.lastData;
             latitude = li.latitude;
-            longtitude = li.longitude;
+            longitude = li.longitude;
 
 
             latitude_text.text = "Latitude: " + latitude.ToString();
-            longtitude_text.text = "Longtitude: " + longtitude.ToString();
+            longtitude_text.text = "Longtitude: " + longitude.ToString();
         }
     }
 }

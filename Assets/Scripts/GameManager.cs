@@ -7,13 +7,14 @@ public class GameManager : Singleton<GameManager>
     [HideInInspector]
     public bool isCleared = false;
     public SpawnMode spawnMode;
-
-    private int currentEnemyCount = 0;
+    
+    public int currentEnemyCount { get; private set; }
     private Player player;
-
+    public DungeonInfo dungeonInfo;
     private void Start()
     {
-        player=GameObject.FindWithTag("Player").GetComponent<Player>();
+        currentEnemyCount = 0;
+        player =GameObject.FindWithTag("Player").GetComponent<Player>();
     }
     // Update is called once per frame
     void Update()
@@ -26,7 +27,7 @@ public class GameManager : Singleton<GameManager>
     public void EnemyDefeated()
     {
         currentEnemyCount++;
-        if (currentEnemyCount >=spawnMode.enemyCount)
+        if (currentEnemyCount >=spawnMode.enemyTotalCount)
         {
             isCleared = true;
             // 게임 클리어 처리
