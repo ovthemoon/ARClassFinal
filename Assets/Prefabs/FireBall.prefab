@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4080457068236636831}
   - component: {fileID: 6032668672542315309}
   - component: {fileID: 8255697527432845454}
-  - component: {fileID: 6584446332523006051}
   m_Layer: 0
   m_Name: FireBall
   m_TagString: Attack
@@ -149,22 +148,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skill: {fileID: 11400000, guid: 2beb6e08b1cb60044a3c1f724d591e4d, type: 2}
---- !u!114 &6584446332523006051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7251135356160668890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0331895092f6d244ab5a7ef61974b0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  throwSkillPrefab: {fileID: 0}
-  speed: 10
-  offset: {x: 0, y: 0, z: 3}
-  aliveTime: 5
 --- !u!1001 &6960513645475822472
 PrefabInstance:
   m_ObjectHideFlags: 0

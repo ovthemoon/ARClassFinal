@@ -39,9 +39,9 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    public void decreaseEnemyHp()
+    public void decreaseEnemyHp(float attack)
     {
-        enemyHp -= attackAmount;
+        enemyHp -= attack;
         if (enemyHp <= 0)
         {
             isDead = true;
@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour
         if (collider.gameObject.CompareTag("Player"))
         {
             collider.gameObject.GetComponent<Player>().decreaseHp(attackAmount);
-
+            Destroy(this.gameObject);
         }
     }
 }

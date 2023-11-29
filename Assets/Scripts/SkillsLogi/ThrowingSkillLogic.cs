@@ -3,26 +3,24 @@ using System.Collections;
 
 public class ThrowingSkillLogic : MonoBehaviour, ISkillLogic
 {
-    [HideInInspector]
     public GameObject throwSkillPrefab;
+    public SkillScript skillData;
     public float speed = 10f;
     public Vector3 offset = new Vector3(0, 0, 3);
     public float aliveTime = 5f;
     private bool isDestroyed = false;
     private Vector3 pos;
     private bool isCooltime = false;
-    public void Activate(GameObject target)
+    
+    public void Activate()
     {
         if(!isCooltime)
         {
-            StartCoroutine(Cooltime(throwSkillPrefab.GetComponent<SkillScript>().cooldown));
+            StartCoroutine(Cooltime(skillData.cooldown));
             pos = Camera.main.transform.position;
 
-            // 카메라의 회전을 고려한 offset 계산
-            Vector3 forward = Camera.main.transform.forward;
-            Vector3 adjustedOffset = forward * offset.z + Camera.main.transform.right * offset.x + Camera.main.transform.up * offset.y;
-            offset = adjustedOffset;
-            Vector3 fireStartPosition = pos + offset;
+            Vector3 screenCenter = new Vector3(0.5f, 0.5f, 0.5f); // z 값은 카메라에서 얼마나 멀리 떨어져 있는지를 결정
+            Vector3 fireStartPosition = Camera.main.ViewportToWorldPoint(screenCenter);
 
             GameObject throwSkill = Instantiate(throwSkillPrefab, fireStartPosition, Quaternion.identity);
             StartCoroutine(DestroySkill(throwSkill));
