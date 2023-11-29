@@ -20,6 +20,7 @@ public struct DungeonInfo
     }
 }
 
+
 public struct ShopInfo
 {
     public (float latitude, float longitude) gps;
@@ -43,7 +44,7 @@ public class DummyManager : Singleton<DummyManager>
 
 
 
-    //ÀÔÀå °¡´ÉÇÑ gpsÀÇ ¹üÀ§
+    //ì…ì¥ ê°€ëŠ¥í•œ gpsì˜ ë²”ìœ„
     private float distance = 10;
     // Start is called before the first frame update
     void Start()
@@ -53,21 +54,25 @@ public class DummyManager : Singleton<DummyManager>
         SI = new ShopInfo((37.88648f, 127.7358f), false);
         dungeon[0] = new DungeonInfo((37.791231f,127.123242f), 1, 0, 10,false);
 
-        //0Àº º¸½º
+
+
+        //0ì€ ë³´ìŠ¤
         for (int i = 1; i < dungeon.Length; i++)
         {
-            //¾à°£ÀÇ ¿ÀÇÁ¼Â ¼³Á¤À» À§ÇØ 0.0001À» °öÇØÁÜ
-            dungeon[i] = new DungeonInfo((37.791231f+(float)0.0001*i, 127.123242f+ (float)0.0001 * i), 1, i, 10,false);
+            //ì•½ê°„ì˜ ì˜¤í”„ì…‹ ì„¤ì •ì„ ìœ„í•´ 0.0001ì„ ê³±í•´ì¤Œ
+
+            dungeon[i] = new DungeonInfo((37.791231f+(float)0.0001*i, 127.123242f+ (float)0.0001 * i), 1, i, 10+5*i-1,false);
+
         }
-
-
     }
+
 
     // Update is called once per frame
     void Update()
     {
         for (int i = 0; i < dungeon.Length; i++)
         {
+
             double currentDistanceToDungeon = CalculateDistance(GPS_Manager.Instance.latitude, GPS_Manager.Instance.longitude,
             dungeon[i].gps.latitude, dungeon[i].gps.longitude);
 
@@ -76,7 +81,7 @@ public class DummyManager : Singleton<DummyManager>
                 dungeon[i].isEnableEntrance = true;
             }
 
-            //GPS¸¦ ¹Ş¾Æ¿ÀÁö ¸øÇÏ´Â°æ¿ì(Å×½ºÆ®¿ë)
+            //GPSë¥¼ ë°›ì•„ì˜¤ì§€ ëª»í•˜ëŠ”ê²½ìš°(í…ŒìŠ¤íŠ¸ìš©)
             if (!GPS_Manager.Instance.receiveGPS)
             {
                 dungeon[i].isEnableEntrance = true;
@@ -89,17 +94,18 @@ public class DummyManager : Singleton<DummyManager>
         {
             SI.isShopEnable = true;
         }
-        //GPS¸¦ ¹Ş¾Æ¿ÀÁö ¸øÇÏ´Â°æ¿ì(Å×½ºÆ®¿ë)
+        //GPSë¥¼ ë°›ì•„ì˜¤ì§€ ëª»í•˜ëŠ”ê²½ìš°(í…ŒìŠ¤íŠ¸ìš©)
         if (!GPS_Manager.Instance.receiveGPS)
         {
             SI.isShopEnable = true;
         }
 
     }
+
     public double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
     {
-        var R = 6371e3; // Áö±¸ÀÇ ¹İÁö¸§ (¹ÌÅÍ ´ÜÀ§)
-        var radLat1 = lat1 * Mathf.Deg2Rad; // À§µµ¸¦ ¶óµğ¾ÈÀ¸·Î º¯È¯
+        var R = 6371e3; // ì§€êµ¬ì˜ ë°˜ì§€ë¦„ (ë¯¸í„° ë‹¨ìœ„)
+        var radLat1 = lat1 * Mathf.Deg2Rad; // ìœ„ë„ë¥¼ ë¼ë””ì•ˆìœ¼ë¡œ ë³€í™˜
         var radLat2 = lat2 * Mathf.Deg2Rad;
         var deltaLat = (lat2 - lat1) * Mathf.Deg2Rad;
         var deltaLon = (lon2 - lon1) * Mathf.Deg2Rad;
@@ -109,7 +115,7 @@ public class DummyManager : Singleton<DummyManager>
                 Math.Sin(deltaLon / 2) * Math.Sin(deltaLon / 2);
         var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
 
-        var distance = R * c; // ÃÖÁ¾ °Å¸® (¹ÌÅÍ ´ÜÀ§)
+        var distance = R * c; // ìµœì¢… ê±°ë¦¬ (ë¯¸í„° ë‹¨ìœ„)
         return distance;
     }
 }

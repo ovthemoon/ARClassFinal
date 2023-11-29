@@ -6,11 +6,10 @@ using UnityEngine.XR.ARFoundation;
 public class SpawnMode : MonoBehaviour
 {
     public GameObject enemyPrefab;
-   
 
     public float spawnCooltime = 3f;
-    public float spawnRadius = 10f;
-
+    public float spawnRadius = 20f;
+    public UIManager uiManager;
     private ARPlane spawnPlane;
     private GameObject player;
     public int enemyTotalCount { get; private set; }
@@ -22,10 +21,12 @@ public class SpawnMode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = Camera.main.gameObject;
         spawnPlane = ScanMode.selectedPlane;
-        StartCoroutine(StartSpawning());
         enemyTotalCount = GameManager.Instance.dungeonInfo.monsterCount;
+        spawnCooltime = GameManager.Instance.dungeonInfo.spawnTime;
+        StartCoroutine(StartSpawning());
+
     }
 
     // Update is called once per frame
@@ -41,11 +42,11 @@ public class SpawnMode : MonoBehaviour
             yield return new WaitForSeconds(spawnCooltime);
         }
     }
-
+    
     void SpawnEnemyNearPlayer()
     {
         Vector2 randomPoint = Random.insideUnitCircle * spawnRadius;
-        Vector3 spawnPosition = new Vector3(randomPoint.x, spawnPlane.transform.position.y, randomPoint.y) + player.transform.position;
+        Vector3 spawnPosition = new Vector3(randomPoint.x+player.transform.position.x, spawnPlane.transform.position.y-2f, randomPoint.y+ player.transform.position.x);
 
         Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
     }

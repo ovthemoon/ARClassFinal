@@ -15,12 +15,12 @@ public class UIManager : MonoBehaviour
     public GameObject exit_menu;
     public GameObject obj;
 
-
+    public SpawnMode spawnMode;
 
     public TMP_Text result1;
     public TMP_Text result;
 
-    bool inGame = false;
+        bool inGame = false;
     [Header("EnemyState")]
     public TMP_Text totalEnemyCount;
     public TMP_Text currentKilledEnemyCount;
@@ -30,9 +30,9 @@ public class UIManager : MonoBehaviour
     public TMP_Text playerLevel;
     public TMP_Text expPercentage;
 
-
     DungeonInfo dungeonInfo;
 
+        
     void Start()
     {
             
@@ -67,8 +67,7 @@ public class UIManager : MonoBehaviour
             return;
             // Optionally, you can log additional information from the exception, such as ex.StackTrace
         }
-
-
+            
 
     }
         
@@ -79,24 +78,30 @@ public class UIManager : MonoBehaviour
     }
     private void SetPlayerInfo()
     {
-            
-        playerLevel.text= "LV: "+DataManager.Instance.PlayerLevel.ToString();
+    if (DataManager.Instance != null) {
+        playerLevel.text = "LV: " + DataManager.Instance.PlayerLevel.ToString();
         expBar.minValue = 0;
         expBar.maxValue = DataManager.Instance.GetExpMax();
-        expBar.value= DataManager.Instance.PlayerExp;
-        expPercentage.text = ((float)expBar.value / expBar.maxValue*100).ToString()+" %";
+        expBar.value = DataManager.Instance.PlayerExp;
+        expPercentage.text = ((float)expBar.value / expBar.maxValue * 100).ToString() + " %";
+    }
+    else
+    {
+        Debug.Log("Datamanagerê°€ ì•ˆë°›ì•„ì ¸ì—¼");
+    }
+            
     }
     private void SetEnemyCount()
     {
-        totalEnemyCount.text = GameManager.Instance.dungeonInfo.monsterCount.ToString();
-        currentKilledEnemyCount.text = GameManager.Instance.currentEnemyCount.ToString();
+        totalEnemyCount.text = spawnMode.enemyTotalCount.ToString();
+    currentKilledEnemyCount.text = GameManager.Instance.currentEnemyCount.ToString();
     }
 
     public void Entrance_button(int dungeonIndex)
     {
-        //Dummy Manager¿¡¼­ Á¤º¸¸¦ ¹Ş¾Æ¿Â´Ù
+        //Dummy Managerì—ì„œ ì •ë³´ë¥¼ ë°›ì•„ì˜¨ë‹¤
         dungeonInfo = DummyManager.Instance.dungeon[dungeonIndex];
-        //´øÀüÀÌ ÇÃ·¹ÀÌ¾î¿Í ¸ÖÁö ¾Ê¾Æ ÀÔÀåÀÌ °¡´ÉÇÏ¸é(°Å¸®´Â Dummy Manager¿¡¼­ °è»ê)
+        //ë˜ì „ì´ í”Œë ˆì´ì–´ì™€ ë©€ì§€ ì•Šì•„ ì…ì¥ì´ ê°€ëŠ¥í•˜ë©´(ê±°ë¦¬ëŠ” Dummy Managerì—ì„œ ê³„ì‚°)
         if (dungeonInfo.isEnableEntrance)
         {
             result1.text = "Accepted";
@@ -104,7 +109,9 @@ public class UIManager : MonoBehaviour
             obj.SetActive(true);
             dungeon_menu.SetActive(false);
             GameManager.Instance.dungeonInfo= dungeonInfo;
-            SceneManager.LoadScene("InDungeon");
+        Debug.Log("Dungeon Info Set: " + GameManager.Instance.dungeonInfo.monsterCount.ToString());
+
+        SceneManager.LoadScene("InDungeon");
         }
         else
         {
@@ -118,14 +125,12 @@ public class UIManager : MonoBehaviour
 
     public void Exit_button()
     {
-        exit_menu.SetActive(true);
+        exit_menu.SetActive(!exit_menu.activeSelf);
     }
 
     public void Main_Scene()
     {
         SceneManager.LoadScene("gps_scene");
     }
-
-
 }
 

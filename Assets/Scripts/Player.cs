@@ -12,12 +12,6 @@ public class Player : MonoBehaviour
         curHp = DataManager.Instance.PlayerMaxHp;
         isDead = false;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void decreaseHp(int attackAmount)
     {
         //HP °¨¼Ò
