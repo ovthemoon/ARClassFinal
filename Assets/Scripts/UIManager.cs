@@ -93,7 +93,7 @@ using System;
         private void SetEnemyCount()
         {
             totalEnemyCount.text = spawnMode.enemyTotalCount.ToString();
-            currentKilledEnemyCount.text = spawnMode.currentEnemyCount.ToString();
+        currentKilledEnemyCount.text = GameManager.Instance.currentEnemyCount.ToString();
         }
 
         public void Entrance_button(int dungeonIndex)

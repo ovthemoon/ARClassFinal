@@ -8,13 +8,12 @@ public class SpawnMode : MonoBehaviour
     public GameObject enemyPrefab;
 
     public float spawnCooltime = 3f;
-    public float spawnRadius = 10f;
-
+    public float spawnRadius = 20f;
+    public UIManager uiManager;
     private ARPlane spawnPlane;
     private GameObject player;
     public int enemyTotalCount { get; private set; }
     public int curEnemyCount { get; private set; }
-    public int currentEnemyCount { get; private set; }
     private void OnEnable()
     {
         UIController.ShowUI("Main");
@@ -22,12 +21,11 @@ public class SpawnMode : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = Camera.main.gameObject;
         spawnPlane = ScanMode.selectedPlane;
         enemyTotalCount = GameManager.Instance.dungeonInfo.monsterCount;
         spawnCooltime = GameManager.Instance.dungeonInfo.spawnTime;
         StartCoroutine(StartSpawning());
-        currentEnemyCount = 0;
 
     }
 
@@ -44,19 +42,11 @@ public class SpawnMode : MonoBehaviour
             yield return new WaitForSeconds(spawnCooltime);
         }
     }
-    public void EnemyDefeated()
-    {
-        currentEnemyCount++;
-        if (currentEnemyCount >= enemyTotalCount)
-        {
-            GameManager.Instance.isCleared = true;
-            // 게임 클리어 처리
-        }
-    }
+    
     void SpawnEnemyNearPlayer()
     {
         Vector2 randomPoint = Random.insideUnitCircle * spawnRadius;
-        Vector3 spawnPosition = new Vector3(randomPoint.x, spawnPlane.transform.position.y, randomPoint.y) + player.transform.position;
+        Vector3 spawnPosition = new Vector3(randomPoint.x+player.transform.position.x, spawnPlane.transform.position.y-2f, randomPoint.y+ player.transform.position.x);
 
         Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
     }

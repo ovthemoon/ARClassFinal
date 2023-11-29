@@ -41,6 +41,7 @@ public class ZombieScript : MonoBehaviour
             DataManager.Instance.UpdateMoney(moneyDrop);
             GameManager.Instance.EnemyDefeated();
             animator.SetBool("IsDead", isDead);
+            Destroy(this.gameObject, 3f);
         }
     }
     private void OnTriggerEnter(Collider collider)
