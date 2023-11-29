@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour
         if (collider.gameObject.CompareTag("Player"))
         {
             collider.gameObject.GetComponent<Player>().decreaseHp(attackAmount);
-            Destroy(this.gameObject);
+
         }
     }
 }

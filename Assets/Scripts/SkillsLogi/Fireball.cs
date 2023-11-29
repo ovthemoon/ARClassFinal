@@ -10,7 +10,7 @@ public class Fireball : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            other.gameObject.GetComponent<ZombieScript>().decreaseEnemyHp(skill.damage);
+            other.gameObject.GetComponent<Enemy>().decreaseEnemyHp(skill.damage);
             Destroy(gameObject);
         }
     }
