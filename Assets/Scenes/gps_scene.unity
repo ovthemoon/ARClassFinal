@@ -1394,6 +1394,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCleared: 0
+  currentEnemyCount: 0
+  isPlayerDead: 0
 --- !u!4 &283666649
 Transform:
   m_ObjectHideFlags: 0
@@ -3637,6 +3639,8 @@ MonoBehaviour:
   result: {fileID: 1245984827}
   totalEnemyCount: {fileID: 0}
   currentKilledEnemyCount: {fileID: 0}
+  hpBar: {fileID: 496686951}
+  hpText: {fileID: 0}
   expBar: {fileID: 496686951}
   playerLevel: {fileID: 1076994509}
   expPercentage: {fileID: 1050079540}
