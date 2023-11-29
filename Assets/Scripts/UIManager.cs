@@ -86,7 +86,7 @@ public class UIManager : MonoBehaviour
     }
     else
     {
-        Debug.Log("Datamanager°¡ ¾È¹Þ¾ÆÁ®¿°");
+        Debug.Log("Datamanagerï¿½ï¿½ ï¿½È¹Þ¾ï¿½ï¿½ï¿½ï¿½ï¿½");
     }
             
     }
@@ -98,9 +98,9 @@ public class UIManager : MonoBehaviour
 
     public void Entrance_button(int dungeonIndex)
     {
-        //Dummy Manager¿¡¼­ Á¤º¸¸¦ ¹Þ¾Æ¿Â´Ù
+        //Dummy Managerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿Â´ï¿½
         dungeonInfo = DummyManager.Instance.dungeon[dungeonIndex];
-        //´øÀüÀÌ ÇÃ·¹ÀÌ¾î¿Í ¸ÖÁö ¾Ê¾Æ ÀÔÀåÀÌ °¡´ÉÇÏ¸é(°Å¸®´Â Dummy Manager¿¡¼­ °è»ê)
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½(ï¿½Å¸ï¿½ï¿½ï¿½ Dummy Managerï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½)
         if (dungeonInfo.isEnableEntrance)
         {
             result1.text = "Accepted";
@@ -108,9 +108,7 @@ public class UIManager : MonoBehaviour
             obj.SetActive(true);
             dungeon_menu.SetActive(false);
             GameManager.Instance.dungeonInfo= dungeonInfo;
-        Debug.Log("Dungeon Info Set: " + GameManager.Instance.dungeonInfo.monsterCount.ToString());
-
-        SceneManager.LoadScene("InDungeon");
+            SceneManager.LoadScene("InDungeon");
         }
         else
         {

@@ -20,22 +20,43 @@ public struct DungeonInfo
     }
 }
 
+public struct ShopInfo
+{
+    public (float latitude, float longitude) gps;
+    public bool isShopEnable;
+
+    public ShopInfo((float latitude, float longitude) gps, bool enable)
+    {
+        this.gps = gps;
+        isShopEnable = enable;
+    }
+}
+
+
+
 public class DummyManager : Singleton<DummyManager>
 {
     public (float latitude, float longitude)[] gpsList;
 
     public DungeonInfo[] dungeon = new DungeonInfo[5];
-    //ÀÔÀå °¡´ÉÇÑ gpsÀÇ ¹üÀ§
+    public ShopInfo SI;
+
+
+
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ gpsï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private float distance = 10;
     // Start is called before the first frame update
     void Start()
     {
-    Debug.Log("Succesfullt screated");
+
+        //SI = new ShopInfo((37.885991f,127.736678f));
+        SI = new ShopInfo((37.88648f, 127.7358f), false);
         dungeon[0] = new DungeonInfo((37.791231f,127.123242f), 1, 0, 10,false);
-        //0Àº º¸½º
+
+        //0ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for (int i = 1; i < dungeon.Length; i++)
         {
-            //¾à°£ÀÇ ¿ÀÇÁ¼Â ¼³Á¤À» À§ÇØ 0.0001À» °öÇØÁÜ
+            //ï¿½à°£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 0.0001ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             dungeon[i] = new DungeonInfo((37.791231f+(float)0.0001*i, 127.123242f+ (float)0.0001 * i), 1, i, 10+5*i-1,false);
         }
     }
@@ -45,7 +66,7 @@ public class DummyManager : Singleton<DummyManager>
     {
         for (int i = 0; i < dungeon.Length; i++)
         {
-        //GPS¸¦ ¹Þ¾Æ¿ÀÁö ¸øÇÏ´Â°æ¿ì(Å×½ºÆ®¿ë)
+        //GPSï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´Â°ï¿½ï¿½(ï¿½×½ï¿½Æ®ï¿½ï¿½)
         if (GPS_Manager.Instance!=null)
             {
                 dungeon[i].isEnableEntrance = true;
@@ -66,8 +87,8 @@ public class DummyManager : Singleton<DummyManager>
     }
     public double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
     {
-        var R = 6371e3; // Áö±¸ÀÇ ¹ÝÁö¸§ (¹ÌÅÍ ´ÜÀ§)
-        var radLat1 = lat1 * Mathf.Deg2Rad; // À§µµ¸¦ ¶óµð¾ÈÀ¸·Î º¯È¯
+        var R = 6371e3; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+        var radLat1 = lat1 * Mathf.Deg2Rad; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
         var radLat2 = lat2 * Mathf.Deg2Rad;
         var deltaLat = (lat2 - lat1) * Mathf.Deg2Rad;
         var deltaLon = (lon2 - lon1) * Mathf.Deg2Rad;
@@ -77,7 +98,58 @@ public class DummyManager : Singleton<DummyManager>
                 Math.Sin(deltaLon / 2) * Math.Sin(deltaLon / 2);
         var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
 
-        var distance = R * c; // ÃÖÁ¾ °Å¸® (¹ÌÅÍ ´ÜÀ§)
+        var distance = R * c; // ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+        return distance;
+    }
+}
+
+    // Update is called once per frame
+    void Update()
+    {
+        for (int i = 0; i < dungeon.Length; i++)
+        {
+            double currentDistanceToDungeon = CalculateDistance(GPS_Manager.Instance.latitude, GPS_Manager.Instance.longitude,
+            dungeon[i].gps.latitude, dungeon[i].gps.longitude);
+
+            if (currentDistanceToDungeon < distance)
+            {
+                dungeon[i].isEnableEntrance = true;
+            }
+
+            //GPSï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´Â°ï¿½ï¿½(ï¿½×½ï¿½Æ®ï¿½ï¿½)
+            if (!GPS_Manager.Instance.receiveGPS)
+            {
+                dungeon[i].isEnableEntrance = true;
+            }
+        }
+
+        double currentDistanceToShop = CalculateDistance(GPS_Manager.Instance.latitude, GPS_Manager.Instance.longitude,
+            SI.gps.latitude, SI.gps.longitude);
+        if (currentDistanceToShop < distance)
+        {
+            SI.isShopEnable = true;
+        }
+        //GPSï¿½ï¿½ ï¿½Þ¾Æ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´Â°ï¿½ï¿½(ï¿½×½ï¿½Æ®ï¿½ï¿½)
+        if (!GPS_Manager.Instance.receiveGPS)
+        {
+            SI.isShopEnable = true;
+        }
+
+    }
+    public double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
+    {
+        var R = 6371e3; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+        var radLat1 = lat1 * Mathf.Deg2Rad; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
+        var radLat2 = lat2 * Mathf.Deg2Rad;
+        var deltaLat = (lat2 - lat1) * Mathf.Deg2Rad;
+        var deltaLon = (lon2 - lon1) * Mathf.Deg2Rad;
+
+        var a = Math.Sin(deltaLat / 2) * Math.Sin(deltaLat / 2) +
+                Math.Cos(radLat1) * Math.Cos(radLat2) *
+                Math.Sin(deltaLon / 2) * Math.Sin(deltaLon / 2);
+        var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+        var distance = R * c; // ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
         return distance;
     }
 }
