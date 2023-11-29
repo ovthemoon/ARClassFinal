@@ -941,6 +941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetSceneName: gps_scene
+  backgroundMusic: {fileID: 8300000, guid: c16f46f4b4751c74c9bad269d23b3c3f, type: 3}
 --- !u!4 &1811118494
 Transform:
   m_ObjectHideFlags: 0
