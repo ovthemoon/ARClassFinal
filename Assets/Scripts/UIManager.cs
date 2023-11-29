@@ -6,130 +6,130 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
 
-    public class UIManager : MonoBehaviour
+public class UIManager : MonoBehaviour
+{
+    float longitude = 0;
+    float latitude = 0;
+
+    public GameObject dungeon_menu;
+    public GameObject exit_menu;
+    public GameObject obj;
+    public SpawnMode spawnMode;
+
+    public TMP_Text result1;
+    public TMP_Text result;
+
+        bool inGame = false;
+    [Header("EnemyState")]
+    public TMP_Text totalEnemyCount;
+    public TMP_Text currentKilledEnemyCount;
+
+    [Header("PlayerInfo")]
+    public Slider expBar;
+    public TMP_Text playerLevel;
+    public TMP_Text expPercentage;
+
+    DungeonInfo dungeonInfo;
+
+        
+    void Start()
     {
-        float longitude = 0;
-        float latitude = 0;
-
-        public GameObject dungeon_menu;
-        public GameObject exit_menu;
-        public GameObject obj;
-        public SpawnMode spawnMode;
-
-        public TMP_Text result1;
-        public TMP_Text result;
-
-         bool inGame = false;
-        [Header("EnemyState")]
-        public TMP_Text totalEnemyCount;
-        public TMP_Text currentKilledEnemyCount;
-
-        [Header("PlayerInfo")]
-        public Slider expBar;
-        public TMP_Text playerLevel;
-        public TMP_Text expPercentage;
-
-        DungeonInfo dungeonInfo;
-
-        
-        void Start()
-        {
             
-            if (obj != null)
-            {
-                obj.SetActive(false);
-            }
-
-            inGame = SceneManager.GetActiveScene().name.Equals("InDungeon");
-            Debug.Log(inGame);
-            // Example: Access dungeon information for index 0
-
+        if (obj != null)
+        {
+            obj.SetActive(false);
         }
 
-        void Update()
+        inGame = SceneManager.GetActiveScene().name.Equals("InDungeon");
+        Debug.Log(inGame);
+        // Example: Access dungeon information for index 0
+
+    }
+
+    void Update()
+    {
+        SetPlayerInfo();
+        if (inGame)
         {
-            SetPlayerInfo();
-            if (inGame)
-            {
-                SetEnemyCount();
-            }
+            SetEnemyCount();
+        }
             
-            try
-            {
-                longitude = GPS_Manager.Instance.longitude;
-                latitude = GPS_Manager.Instance.latitude;
-            }
-            catch (Exception ex)
-            {
-                latitude = 37.791231f;
-                longitude = 127.123242f;
-                return;
-                // Optionally, you can log additional information from the exception, such as ex.StackTrace
-            }
+        try
+        {
+            longitude = GPS_Manager.Instance.longitude;
+            latitude = GPS_Manager.Instance.latitude;
+        }
+        catch (Exception ex)
+        {
+            latitude = 37.791231f;
+            longitude = 127.123242f;
+            return;
+            // Optionally, you can log additional information from the exception, such as ex.StackTrace
+        }
             
 
-        }
+    }
         
 
-        public void Menu_button()
+    public void Menu_button()
+    {
+        dungeon_menu.SetActive(!dungeon_menu.activeSelf);
+    }
+    private void SetPlayerInfo()
+    {
+    if (DataManager.Instance != null) {
+        playerLevel.text = "LV: " + DataManager.Instance.PlayerLevel.ToString();
+        expBar.minValue = 0;
+        expBar.maxValue = DataManager.Instance.GetExpMax();
+        expBar.value = DataManager.Instance.PlayerExp;
+        expPercentage.text = ((float)expBar.value / expBar.maxValue * 100).ToString() + " %";
+    }
+    else
+    {
+        Debug.Log("Datamanager가 안받아져염");
+    }
+            
+    }
+    private void SetEnemyCount()
+    {
+        totalEnemyCount.text = spawnMode.enemyTotalCount.ToString();
+    currentKilledEnemyCount.text = GameManager.Instance.currentEnemyCount.ToString();
+    }
+
+    public void Entrance_button(int dungeonIndex)
+    {
+        //Dummy Manager에서 정보를 받아온다
+        dungeonInfo = DummyManager.Instance.dungeon[dungeonIndex];
+        //던전이 플레이어와 멀지 않아 입장이 가능하면(거리는 Dummy Manager에서 계산)
+        if (dungeonInfo.isEnableEntrance)
         {
-            dungeon_menu.SetActive(!dungeon_menu.activeSelf);
-        }
-        private void SetPlayerInfo()
-        {
-        if (DataManager.Instance != null) {
-            playerLevel.text = "LV: " + DataManager.Instance.PlayerLevel.ToString();
-            expBar.minValue = 0;
-            expBar.maxValue = DataManager.Instance.GetExpMax();
-            expBar.value = DataManager.Instance.PlayerExp;
-            expPercentage.text = ((float)expBar.value / expBar.maxValue * 100).ToString() + " %";
+            result1.text = "Accepted";
+            result.text = "Dungeon Entranced!!";
+            obj.SetActive(true);
+            dungeon_menu.SetActive(false);
+            GameManager.Instance.dungeonInfo= dungeonInfo;
+        Debug.Log("Dungeon Info Set: " + GameManager.Instance.dungeonInfo.monsterCount.ToString());
+
+        SceneManager.LoadScene("InDungeon");
         }
         else
         {
-            Debug.Log("Datamanager가 안받아져염");
-        }
-            
-        }
-        private void SetEnemyCount()
-        {
-            totalEnemyCount.text = spawnMode.enemyTotalCount.ToString();
-        currentKilledEnemyCount.text = GameManager.Instance.currentEnemyCount.ToString();
-        }
-
-        public void Entrance_button(int dungeonIndex)
-        {
-            //Dummy Manager에서 정보를 받아온다
-            dungeonInfo = DummyManager.Instance.dungeon[dungeonIndex];
-            //던전이 플레이어와 멀지 않아 입장이 가능하면(거리는 Dummy Manager에서 계산)
-            if (dungeonInfo.isEnableEntrance)
-            {
-                result1.text = "Accepted";
-                result.text = "Dungeon Entranced!!";
-                obj.SetActive(true);
-                dungeon_menu.SetActive(false);
-                GameManager.Instance.dungeonInfo= dungeonInfo;
-            Debug.Log("Dungeon Info Set: " + GameManager.Instance.dungeonInfo.monsterCount.ToString());
-
-            SceneManager.LoadScene("InDungeon");
-            }
-            else
-            {
-                result1.text = "Declined";
-                result.text = "Dungeon Disable!!";
-                obj.SetActive(true);
-                //SceneManager.LoadScene("dungeon_scene");
-            }
-        }
-       
-
-        public void Exit_button()
-        {
-            exit_menu.SetActive(!exit_menu.activeSelf);
-        }
-
-        public void Main_Scene()
-        {
-            SceneManager.LoadScene("gps_scene");
+            result1.text = "Declined";
+            result.text = "Dungeon Disable!!";
+            obj.SetActive(true);
+            //SceneManager.LoadScene("dungeon_scene");
         }
     }
+       
+
+    public void Exit_button()
+    {
+        exit_menu.SetActive(!exit_menu.activeSelf);
+    }
+
+    public void Main_Scene()
+    {
+        SceneManager.LoadScene("gps_scene");
+    }
+}
 
