@@ -1854,6 +1854,8 @@ MonoBehaviour:
   dungeon_menu: {fileID: 1427768429}
   exit_menu: {fileID: 1650329608}
   obj: {fileID: 0}
+  NPC: {fileID: 0}
+  Shop: {fileID: 0}
   result1: {fileID: 0}
   result: {fileID: 0}
   totalEnemyCount: {fileID: 2114900720}
