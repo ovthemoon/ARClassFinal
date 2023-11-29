@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2594366807317871961}
   - component: {fileID: 1573042835979622640}
   - component: {fileID: 6049022792401066300}
+  - component: {fileID: 9150234552619892492}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -111,7 +112,7 @@ MonoBehaviour:
   m_FocusMode: -1
   m_LightEstimationMode: -1
   m_AutoFocus: 1
-  m_LightEstimation: 0
+  m_LightEstimation: -1
   m_FacingDirection: 1
   m_RenderMode: 0
 --- !u!114 &2594366807317871961
@@ -146,10 +147,10 @@ MonoBehaviour:
   m_PositionInput:
     m_UseReference: 0
     m_Action:
-      m_Name: Position
+      m_Name: Position Input
       m_Type: 0
       m_ExpectedControlType: Vector3
-      m_Id: 9d51972b-38a2-42e1-a034-3e80c466e5c9
+      m_Id: 0a06d36b-daa2-4b82-8c0b-c9eb0ae9274d
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings:
@@ -174,10 +175,10 @@ MonoBehaviour:
   m_RotationInput:
     m_UseReference: 0
     m_Action:
-      m_Name: Rotation
+      m_Name: Rotation Input
       m_Type: 0
       m_ExpectedControlType: Quaternion
-      m_Id: 583a30b9-4820-4014-b4c5-018d3594fd62
+      m_Id: 353d7450-3105-4f0f-ba18-00b0e4e52818
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings:
@@ -274,6 +275,27 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!65 &9150234552619892492
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2709599377200418019}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3617134216089355356
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,9 +307,8 @@ GameObject:
   - component: {fileID: 5958518649160410702}
   - component: {fileID: 7604787989891334955}
   - component: {fileID: 6633066619507024491}
-  - component: {fileID: 5731261387497418012}
   - component: {fileID: 8872052279124757880}
-  - component: {fileID: 3339912220097036909}
+  - component: {fileID: 1852556437604304661}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -340,23 +361,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa850fbd5b8aded44846f96e35f1a9f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5731261387497418012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3617134216089355356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9ff601588e962943ac66490db5e9e05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FirePrefab: {fileID: 337162416555747125, guid: 87e5b4a4f413d5945aa61b6766d0c4bf,
-    type: 3}
-  offset: {x: 0, y: 0, z: 1}
-  cooldownTime: 5
-  fireballSpeed: 10
 --- !u!114 &8872052279124757880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,27 +376,19 @@ MonoBehaviour:
   m_PlanePrefab: {fileID: 2707328084050734606, guid: 62d8c56056bc6374a96c742065b19ff1,
     type: 3}
   m_DetectionMode: -1
---- !u!65 &3339912220097036909
-BoxCollider:
+--- !u!114 &1852556437604304661
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3617134216089355356}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae5595d277809444a21bb910849422e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDead: 0
 --- !u!1 &8548020180975087217
 GameObject:
   m_ObjectHideFlags: 0

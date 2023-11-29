@@ -61,47 +61,8 @@ public class DummyManager : Singleton<DummyManager>
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        for (int i = 0; i < dungeon.Length; i++)
-        {
-        //GPS�� �޾ƿ��� ���ϴ°��(�׽�Ʈ��)
-        if (GPS_Manager.Instance!=null)
-            {
-                dungeon[i].isEnableEntrance = true;
-            }
-            else
-            {
-                double currentDistanceToDungeon = CalculateDistance(GPS_Manager.Instance.latitude, GPS_Manager.Instance.longitude,
-                dungeon[i].gps.latitude, dungeon[i].gps.longitude);
-                if (currentDistanceToDungeon < distance)
-                {
-                    dungeon[i].isEnableEntrance = true;
-                }
-                    
-            }
+    
 
-    }
-            
-    }
-    public double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
-    {
-        var R = 6371e3; // ������ ������ (���� ����)
-        var radLat1 = lat1 * Mathf.Deg2Rad; // ������ �������� ��ȯ
-        var radLat2 = lat2 * Mathf.Deg2Rad;
-        var deltaLat = (lat2 - lat1) * Mathf.Deg2Rad;
-        var deltaLon = (lon2 - lon1) * Mathf.Deg2Rad;
-
-        var a = Math.Sin(deltaLat / 2) * Math.Sin(deltaLat / 2) +
-                Math.Cos(radLat1) * Math.Cos(radLat2) *
-                Math.Sin(deltaLon / 2) * Math.Sin(deltaLon / 2);
-        var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-
-        var distance = R * c; // ���� �Ÿ� (���� ����)
-        return distance;
-    }
-}
 
     // Update is called once per frame
     void Update()
