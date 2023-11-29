@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/Items.cs.meta
+guid: 2cf82200ad5e0ed4cabbc831d4d6190f
+========
+guid: 052e33871a2fad141a6e865fd0e95fbe
+>>>>>>>> parent of 7733f8b (Merge pull request #4 from ovthemoon/Connection):Assets/Scripts/Skills.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
