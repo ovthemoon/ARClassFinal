@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 public struct DungeonInfo
 {
     public (float latitude, float longitude) gps;
@@ -42,15 +43,14 @@ public class DummyManager : Singleton<DummyManager>
     public ShopInfo SI;
 
 
-
     //���� ������ gps�� ����
-    private float distance = 10;
+    private float distance = 10f;
     // Start is called before the first frame update
     void Start()
     {
 
         //SI = new ShopInfo((37.885991f,127.736678f));
-        SI = new ShopInfo((37.88648f, 127.7358f), false);
+        SI = new ShopInfo((37.882043f, 127.739730f), false);
         dungeon[0] = new DungeonInfo((37.791231f,127.123242f), 1, 0, 10,false);
 
         //0�� ����
@@ -84,11 +84,17 @@ public class DummyManager : Singleton<DummyManager>
             }
         }
 
+
         double currentDistanceToShop = CalculateDistance(GPS_Manager.Instance.latitude, GPS_Manager.Instance.longitude,
-            SI.gps.latitude, SI.gps.longitude);
+                    SI.gps.latitude, SI.gps.longitude);
+
         if (currentDistanceToShop < distance)
         {
             SI.isShopEnable = true;
+        }
+        else
+        {
+            SI.isShopEnable= false;
         }
         //GPS�� �޾ƿ��� ���ϴ°��(�׽�Ʈ��)
         if (!GPS_Manager.Instance.receiveGPS)
@@ -113,5 +119,7 @@ public class DummyManager : Singleton<DummyManager>
         var distance = R * c; // ���� �Ÿ� (���� ����)
         return distance;
     }
+
+
 }
 

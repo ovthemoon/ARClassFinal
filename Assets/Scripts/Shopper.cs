@@ -6,17 +6,21 @@ public class Shopper : MonoBehaviour
 {
     public GameObject Shop;
     public GameObject shopQ;
+    public GameObject Particle;
 
     ShopInfo shopInfo;
     private bool isVisible = true;
     private bool enteredShop = false;
 
+
+    // Add this field for the AudioSource component
+    public AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        audioSource = GetComponent<AudioSource>();
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -27,6 +31,7 @@ public class Shopper : MonoBehaviour
         {
             ShowNPC();
             gameObject.GetComponent<CapsuleCollider>().enabled = true;
+            
         }
         else
         {
@@ -54,7 +59,6 @@ public class Shopper : MonoBehaviour
                     if (hit.collider.CompareTag("shopper"))
                     {
                         // NPC touched, perform interaction logic
-                        NPCInteractionLogic();
                         shopQ.SetActive(true);
                     }
                 }
@@ -68,13 +72,6 @@ public class Shopper : MonoBehaviour
         shopQ.SetActive(true);
     }
 
-
-    void NPCInteractionLogic()
-    {
-        // Your NPC interaction logic goes here
-        Debug.Log("NPC Touched!");
-    }
-   
     public void EnterShop()
     {
         Shop.SetActive(true);
@@ -84,15 +81,20 @@ public class Shopper : MonoBehaviour
 
     public void ExitShop()
     {
-       Shop.SetActive(false);
-       enteredShop = false;
-       shopQ.SetActive(false);
+        Shop.SetActive(false);
+        enteredShop = false;
+        shopQ.SetActive(false);
     }
     // Method to show the NPC
     private void ShowNPC()
     {
         isVisible = true;
         transform.localScale = new Vector3(3f, 3f, 3f);
+        if (audioSource != null && audioSource.clip != null)
+        {
+            audioSource.Play();
+        }
+        Particle.SetActive(true);
     }
 
     // Method to hide the NPC
@@ -100,5 +102,7 @@ public class Shopper : MonoBehaviour
     {
         isVisible = false;
         transform.localScale = new Vector3(0f, 0f, 0f);
+        Particle.SetActive(false);
     }
+    
 }
