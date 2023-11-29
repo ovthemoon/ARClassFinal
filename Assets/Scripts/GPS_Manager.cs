@@ -80,8 +80,8 @@ public class GPS_Manager : Singleton<GPS_Manager>
             longitude = li.longitude;
 
 
-            latitude_text.text = "Latitude: " + latitude.ToString();
-            longtitude_text.text = "Longtitude: " + longitude.ToString();
+            latitude_text.text = "Latitude: " + latitude.ToString("F7");
+            longtitude_text.text = "Longtitude: " + longitude.ToString("F7");
         }
     }
 }
