@@ -3610,6 +3610,7 @@ MonoBehaviour:
   expBar: {fileID: 496686951}
   playerLevel: {fileID: 1076994509}
   expPercentage: {fileID: 1050079540}
+  playerMoney: {fileID: 1448894676}
 --- !u!4 &851994885
 Transform:
   m_ObjectHideFlags: 0
@@ -3845,7 +3846,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8872052279124757880, guid: 03d20784db20045468c59b82eb473569, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -6498,8 +6500,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 25.07
+  m_fontSizeBase: 25.07
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

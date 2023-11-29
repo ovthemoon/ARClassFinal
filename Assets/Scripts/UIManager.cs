@@ -24,17 +24,22 @@ public class UIManager : MonoBehaviour
     public TMP_Text totalEnemyCount;
     public TMP_Text currentKilledEnemyCount;
 
+    [Header("HPSet")]
+    public Slider hpBar;
+    public TMP_Text hpText;
+
     [Header("PlayerInfo")]
     public Slider expBar;
     public TMP_Text playerLevel;
     public TMP_Text expPercentage;
+    public TMP_Text playerMoney;
 
     DungeonInfo dungeonInfo;
-
+    Player player;
         
     void Start()
     {
-            
+        player = GameObject.FindWithTag("Player").GetComponent<Player>();
         if (obj != null)
         {
             obj.SetActive(false);
@@ -52,6 +57,7 @@ public class UIManager : MonoBehaviour
         if (inGame)
         {
             SetEnemyCount();
+            SetHp();
         }
             
         try
@@ -77,13 +83,14 @@ public class UIManager : MonoBehaviour
     }
     private void SetPlayerInfo()
     {
-    if (DataManager.Instance != null) {
-        playerLevel.text = "LV: " + DataManager.Instance.PlayerLevel.ToString();
-        expBar.minValue = 0;
-        expBar.maxValue = DataManager.Instance.GetExpMax();
-        expBar.value = DataManager.Instance.PlayerExp;
-        expPercentage.text = ((float)expBar.value / expBar.maxValue * 100).ToString() + " %";
-    }
+        if (DataManager.Instance != null) {
+            playerLevel.text = "LV: " + DataManager.Instance.PlayerLevel.ToString();
+            expBar.minValue = 0;
+            expBar.maxValue = DataManager.Instance.GetExpMax();
+            expBar.value = DataManager.Instance.PlayerExp;
+            expPercentage.text = Math.Floor((float)expBar.value / expBar.maxValue * 100).ToString() + " %";
+            playerMoney.text = DataManager.Instance.Money.ToString();
+        }
     else
     {
         Debug.Log("Datamanager�� �ȹ޾�����");
@@ -93,14 +100,22 @@ public class UIManager : MonoBehaviour
     private void SetEnemyCount()
     {
         totalEnemyCount.text = spawnMode.enemyTotalCount.ToString();
-    currentKilledEnemyCount.text = GameManager.Instance.currentEnemyCount.ToString();
+        currentKilledEnemyCount.text = GameManager.Instance.currentEnemyCount.ToString();
+        
+    }
+    private void SetHp()
+    {
+        hpBar.minValue = 0;
+        hpBar.maxValue = DataManager.Instance.PlayerMaxHp;
+        hpBar.value = player.curHp;
+        hpText.text=player.curHp.ToString()+" / "+DataManager.Instance.PlayerMaxHp;
     }
 
     public void Entrance_button(int dungeonIndex)
     {
-        //Dummy Manager���� ������ �޾ƿ´�
+        //Dummy Manager에서 던전에 대한 정보를 받아온다.
         dungeonInfo = DummyManager.Instance.dungeon[dungeonIndex];
-        //������ �÷��̾�� ���� �ʾ� ������ �����ϸ�(�Ÿ��� Dummy Manager���� ���)
+        
         if (dungeonInfo.isEnableEntrance)
         {
             result1.text = "Accepted";

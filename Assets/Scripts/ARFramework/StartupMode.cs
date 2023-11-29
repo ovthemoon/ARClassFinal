@@ -8,6 +8,8 @@ public class StartupMode : MonoBehaviour
     private void OnEnable()
     {
         UIController.ShowUI("Startup");
+        GameManager.Instance.currentEnemyCount = 0;
+        GameManager.Instance.isCleared = false;
     }
 
 

@@ -9,6 +9,7 @@ public class DataManager : Singleton<DataManager>
     public int Money { get; private set; }
 
     private int[] expMax = {10,30,60,100,150,210,280,360,450};
+    private int[] hpByLevel = { 5, 10, 20, 25, 30, 35, 40, 45, 50 };
     void Start()
     {
         LoadData();
@@ -49,12 +50,14 @@ public class DataManager : Singleton<DataManager>
         if(PlayerExp >= expMax[PlayerLevel - 1])
         {
             UpdateLevelUp();
+            
         }
         SaveData();
     }
     public void UpdateLevelUp()
     {
         PlayerExp = PlayerExp - expMax[PlayerLevel - 1];
+        PlayerMaxHp= hpByLevel[PlayerLevel - 1];
         PlayerLevel++;
     }
 

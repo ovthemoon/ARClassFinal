@@ -6,12 +6,19 @@ public class GameManager : Singleton<GameManager>
 {
     [HideInInspector]
     public bool isCleared = false;
-    
-    public int currentEnemyCount { get; private set; }
+
+    public int currentEnemyCount;
     private Player player;
     public DungeonInfo dungeonInfo;
+    public bool isPlayerDead=false;
+
     private void Start()
     {
+        if (GameManager.Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         DontDestroyOnLoad(gameObject);
         currentEnemyCount = 0;
         player =GameObject.FindWithTag("Player").GetComponent<Player>();
@@ -19,7 +26,7 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void Update()
     {
-        if (isCleared || player.isDead)
+        if (isCleared || isPlayerDead)
         {
             InteractionController.EnableMode("End");
         }

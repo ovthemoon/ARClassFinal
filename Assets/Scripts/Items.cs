@@ -44,7 +44,7 @@ public class Items : MonoBehaviour
     }
     public void Purchase_button(int itemIndex)
     {
-        if (ITEM[itemIndex].cost <= test_gold)
+        if (ITEM[itemIndex].cost <= DataManager.Instance.Money)
         {
             test_gold -= ITEM[itemIndex].cost;
             Header.text = "Purchased!";

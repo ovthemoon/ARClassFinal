@@ -8,7 +8,7 @@ public class SpawnMode : MonoBehaviour
     public GameObject enemyPrefab;
 
     public float spawnCooltime = 3f;
-    public float spawnRadius = 20f;
+    public float spawnRadius = 30f;
     public UIManager uiManager;
     private ARPlane spawnPlane;
     private GameObject player;
@@ -42,11 +42,18 @@ public class SpawnMode : MonoBehaviour
             yield return new WaitForSeconds(spawnCooltime);
         }
     }
-    
+
     void SpawnEnemyNearPlayer()
     {
-        Vector2 randomPoint = Random.insideUnitCircle * spawnRadius;
-        Vector3 spawnPosition = new Vector3(randomPoint.x+player.transform.position.x, spawnPlane.transform.position.y-2f, randomPoint.y+ player.transform.position.x);
+        float minSpawnDistance = 10f; // 플레이어로부터 최소 생성 거리
+        Vector2 randomPoint;
+        do
+        {
+            randomPoint = Random.insideUnitCircle * spawnRadius;
+        }
+        while (randomPoint.magnitude < minSpawnDistance);
+
+        Vector3 spawnPosition = new Vector3(randomPoint.x + player.transform.position.x, spawnPlane.transform.position.y - 1f, randomPoint.y + player.transform.position.z);
 
         Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
     }
